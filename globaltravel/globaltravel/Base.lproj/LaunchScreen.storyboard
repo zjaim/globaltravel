@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="BYi-2S-AKp">
+                                <rect key="frame" x="200" y="180" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Yze-uy-Do9"/>
+                                    <constraint firstAttribute="height" constant="200" id="z9J-s1-xZ7"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2015 北京时代环球国际旅游有限公司" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5qF-Hr-1Im">
+                                <rect key="frame" x="153.5" y="559" width="293.5" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="7RE-ry-eLN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="BYi-2S-AKp" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="02n-Bx-CFk"/>
+                            <constraint firstItem="5qF-Hr-1Im" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="115-zd-zK8"/>
+                            <constraint firstItem="5qF-Hr-1Im" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="1r0-4b-ZKp"/>
+                            <constraint firstItem="5qF-Hr-1Im" firstAttribute="centerY" secondItem="BYi-2S-AKp" secondAttribute="centerY" id="UKX-WE-WkE"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="5qF-Hr-1Im" secondAttribute="bottom" constant="20" id="Xai-gI-o1O"/>
+                            <constraint firstItem="BYi-2S-AKp" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-20" id="Y8B-gd-97G"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="115-zd-zK8"/>
+                                <exclude reference="UKX-WE-WkE"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="logo" width="200" height="200"/>
+    </resources>
+</document>

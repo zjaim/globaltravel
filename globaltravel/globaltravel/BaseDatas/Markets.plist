@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>徜徉伏尔加，陶醉俄罗斯</string>
+		<key>img</key>
+		<string>market_1.jpg</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>目标北极点</string>
+		<key>img</key>
+		<string>market_2.jpg</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>目标南极</string>
+		<key>img</key>
+		<string>market_3.jpg</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>私人定制希腊深度游</string>
+		<key>img</key>
+		<string>market_4.jpg</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>蓝色多瑙河梦幻之旅</string>
+		<key>img</key>
+		<string>market_5.jpg</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>魅力莱茵河浪漫之旅</string>
+		<key>img</key>
+		<string>market_6.jpg</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>自驾穿越西伯利亚</string>
+		<key>img</key>
+		<string>market_7.jpg</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>贝加尔湖八日休闲之旅</string>
+		<key>img</key>
+		<string>market_8.jpg</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>私人定制：冲绳度假休闲游</string>
+		<key>img</key>
+		<string>market_9.jpg</string>
+	</dict>
+</array>
+</plist>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>qq</key>
+		<string>441221950</string>
+		<key>title</key>
+		<string>伏尔加河</string>
+		<key>img</key>
+		<string>service_1.png</string>
+	</dict>
+	<dict>
+		<key>qq</key>
+		<string>441221950</string>
+		<key>title</key>
+		<string>多瑙河</string>
+		<key>img</key>
+		<string>service_2.png</string>
+	</dict>
+	<dict>
+		<key>qq</key>
+		<string>441221950</string>
+		<key>title</key>
+		<string>南极</string>
+		<key>img</key>
+		<string>service_3.png</string>
+	</dict>
+	<dict>
+		<key>qq</key>
+		<string>441221950</string>
+		<key>title</key>
+		<string>希腊</string>
+		<key>img</key>
+		<string>service_4.png</string>
+	</dict>
+	<dict>
+		<key>qq</key>
+		<string>441221950</string>
+		<key>title</key>
+		<string>自驾穿越</string>
+		<key>img</key>
+		<string>service_5.png</string>
+	</dict>
+</array>
+</plist>
