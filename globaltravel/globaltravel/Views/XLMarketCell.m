@@ -12,6 +12,8 @@
 @interface XLMarketCell () {
     UIImageView *_imageView;
     UILabel *_titleLabel;
+    
+    UIView *_titleBgView;
 }
 
 @end
@@ -29,20 +31,18 @@
         contentView.backgroundColor = [UIColor clearColor];
         [self addSubview:contentView];
         
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.width)];
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
         [contentView addSubview:_imageView];
         
-        UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, self.width - 30, self.width, 30)];
-        bgView.backgroundColor = [UIColor blackColor];
-        bgView.alpha = 0.35;
-        [contentView addSubview:bgView];
+        _titleBgView = [[UIView alloc] initWithFrame:CGRectMake(0, self.height - 20, self.height, 20)];
+        _titleBgView.backgroundColor = [UIColor blackColor];
+        _titleBgView.alpha = 0;
+        [contentView addSubview:_titleBgView];
         
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.width - 30, self.width - 20, 30)];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.height - 20, self.width - 20, 20)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.textColor = [UIColor whiteColor];
-        _titleLabel.font = FONT(14);
-        _titleLabel.minimumScaleFactor = .8f;
-        _titleLabel.adjustsFontSizeToFitWidth = YES;
+        _titleLabel.font = FONT(12);
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         [contentView addSubview:_titleLabel];
         
@@ -54,8 +54,13 @@
     _marketInfo = marketInfo;
     
     if (_marketInfo) {
-        _imageView.image = [UIImage imageNamed:_marketInfo.imagePath];
+        [_imageView xl_setImageWithURL:_marketInfo.imagePath];
         _titleLabel.text = _marketInfo.title;
+        if (_titleLabel.text && _titleLabel.text.length > 0) {
+            _titleBgView.alpha = 0.35;
+        } else {
+            _titleBgView.alpha = 0;
+        }
     }
 }
 

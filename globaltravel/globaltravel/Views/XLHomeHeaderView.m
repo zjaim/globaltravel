@@ -14,7 +14,6 @@
 
 @interface XLHomeHeaderView () <AMSlideViewDataSource, AMSlideViewDelegate> {
     AMSlideView *_activitiesView;
-    NSMutableArray *_activities;
 }
 
 @end
@@ -23,7 +22,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        [self loadActivities];
         [self addActivities];
     }
     return self;
@@ -40,19 +38,10 @@
     [_activitiesView reloadData];
 }
 
-- (void)loadActivities {
-    if (!_activities) {
-        _activities = [NSMutableArray array];
-    }
-    [_activities removeAllObjects];
-    NSArray *localDatas = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Activities" ofType:@"plist"]];
-    for (id obj in localDatas) {
-        if ([obj isKindOfClass:[NSDictionary class]]) {
-            [_activities addObject:[[XLActivityInfo alloc] initWithDictionary:obj]];
-        }
-    }
+- (void)setActivities:(NSArray *)activities {
+    _activities = [activities copy];
+    [_activitiesView reloadData];
 }
-
 
 #pragma mark - AMSlideViewDelegate, AMSlideViewDataSource
 - (UIView *)sliderView:(AMSlideView *)sliderView viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view {

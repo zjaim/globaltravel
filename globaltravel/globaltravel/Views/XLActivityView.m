@@ -30,7 +30,7 @@
     _activityInfo = activityInfo;
     
     if (_activityInfo) {
-        _imageView.image = [UIImage imageNamed:_activityInfo.imagePath];
+        [_imageView xl_setImageWithURL:_activityInfo.imagePath];
     }
 }
 

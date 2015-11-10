@@ -12,7 +12,9 @@
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *imagePath;
+@property (nonatomic, copy) NSString *linkURL;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
+- (instancetype)initWithSpiderString:(NSString *)string;
 
 @end

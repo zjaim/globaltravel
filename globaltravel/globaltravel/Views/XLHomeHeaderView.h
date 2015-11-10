@@ -10,4 +10,6 @@
 
 @interface XLHomeHeaderView : UICollectionReusableView
 
+@property (nonatomic, copy) NSArray *activities;
+
 @end
