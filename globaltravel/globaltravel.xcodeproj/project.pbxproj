@@ -32,6 +32,7 @@
 		9B4C233D1BEF5BC7005E8387 /* AMNoticeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4C233C1BEF5BC7005E8387 /* AMNoticeView.m */; };
 		9B4C23401BEF5E31005E8387 /* NSDictionary+AM.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4C233F1BEF5E31005E8387 /* NSDictionary+AM.m */; };
 		9B4C23431BEF5F7C005E8387 /* Services.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9B4C23421BEF5F7C005E8387 /* Services.plist */; };
+		9B8173571BF2445900781FB5 /* XLNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8173561BF2445900781FB5 /* XLNavigationViewController.m */; };
 		9BA10FAD1BF1A708002DAAEE /* XLSpider.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA10FAC1BF1A708002DAAEE /* XLSpider.m */; };
 		9BA10FB01BF1BB23002DAAEE /* XLSessions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA10FAF1BF1BB23002DAAEE /* XLSessions.m */; };
 		9BA10FB31BF1C01A002DAAEE /* XLWebImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA10FB21BF1C01A002DAAEE /* XLWebImage.m */; };
@@ -123,6 +124,8 @@
 		9B4C233E1BEF5E31005E8387 /* NSDictionary+AM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+AM.h"; sourceTree = "<group>"; };
 		9B4C233F1BEF5E31005E8387 /* NSDictionary+AM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+AM.m"; sourceTree = "<group>"; };
 		9B4C23421BEF5F7C005E8387 /* Services.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Services.plist; sourceTree = "<group>"; };
+		9B8173551BF2445900781FB5 /* XLNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLNavigationViewController.h; sourceTree = "<group>"; };
+		9B8173561BF2445900781FB5 /* XLNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLNavigationViewController.m; sourceTree = "<group>"; };
 		9BA10FAB1BF1A708002DAAEE /* XLSpider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLSpider.h; sourceTree = "<group>"; };
 		9BA10FAC1BF1A708002DAAEE /* XLSpider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLSpider.m; sourceTree = "<group>"; };
 		9BA10FAE1BF1BB23002DAAEE /* XLSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLSessions.h; sourceTree = "<group>"; };
@@ -253,6 +256,7 @@
 		9B4C22C01BEF2ED3005E8387 /* globaltravel */ = {
 			isa = PBXGroup;
 			children = (
+				9B8173541BF2443D00781FB5 /* Commons */,
 				9BA10FAA1BF1A6F6002DAAEE /* Spider */,
 				9B4C23411BEF5F60005E8387 /* BaseDatas */,
 				9B4C22D81BEF2FF8005E8387 /* Controllers */,
@@ -433,6 +437,15 @@
 				9BEED9D91BEF732B0026F169 /* Travels.plist */,
 			);
 			path = BaseDatas;
+			sourceTree = "<group>";
+		};
+		9B8173541BF2443D00781FB5 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				9B8173551BF2445900781FB5 /* XLNavigationViewController.h */,
+				9B8173561BF2445900781FB5 /* XLNavigationViewController.m */,
+			);
+			path = Commons;
 			sourceTree = "<group>";
 		};
 		9BA10FAA1BF1A6F6002DAAEE /* Spider */ = {
@@ -654,6 +667,7 @@
 				9BABB0F21BF04588001332EB /* UIButton+WebCache.m in Sources */,
 				9BEED9F91BEFA1E80026F169 /* XLActivityInfo.m in Sources */,
 				9BABB0E91BF04588001332EB /* MKAnnotationView+WebCache.m in Sources */,
+				9B8173571BF2445900781FB5 /* XLNavigationViewController.m in Sources */,
 				9BA10FBD1BF1CA36002DAAEE /* XLLoader.m in Sources */,
 				9BABB0EF1BF04588001332EB /* SDWebImageDownloaderOperation.m in Sources */,
 				9B4C22E81BEF3ED7005E8387 /* UIView+MGJKit.m in Sources */,

@@ -154,7 +154,7 @@ NSString *const kXLMarketCell = @"XLMarketCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section > 0) {
         __weak XLMarketInfo *marketInfo = _markets[indexPath.section - 1][indexPath.item];
-        [[XLURLHandler shareHandler] handlerURL:[marketInfo.linkURL urlString]];
+        [[XLURLHandler shareHandler] handlerURL:[marketInfo.linkURL urlString] title:marketInfo.title];
     }
 }
 

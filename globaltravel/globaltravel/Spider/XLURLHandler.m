@@ -8,6 +8,7 @@
 
 #import "XLURLHandler.h"
 #import "XLWebViewController.h"
+#import "XLNavigationViewController.h"
 
 @implementation NSString (URLCommon)
 
@@ -18,7 +19,7 @@
             urlString = self;
         } else {
             if (self && self.length > 0) {
-                urlString = [[NSString stringWithFormat:@"%@", HTML_HOME] stringByAppendingPathComponent:self];
+                urlString = [[NSString stringWithFormat:@"%@", HTML_BASE] stringByAppendingPathComponent:self];
             }
         }
     }
@@ -40,55 +41,13 @@
     return shareHandler;
 }
 
-- (void)handlerURL:(NSString *)urlString {
+- (void)handlerURL:(NSString *)urlString title:(NSString *)title {
     if (urlString && urlString.length > 0) {
         XLWebViewController *webVC = [XLWebViewController new];
+        webVC.titleString = title;
         webVC.urlString = urlString;
-        [[self currentNavC] pushViewController:webVC animated:YES];
+        [[XLNavigationViewController currentNavC] pushViewController:webVC animated:YES];
     }
-}
-
-- (UIViewController *)currentVC
-{
-    UIViewController *result = nil;
-    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-    if (window.windowLevel != UIWindowLevelNormal) {
-        NSArray *windows = [[UIApplication sharedApplication] windows];
-        for(UIWindow * tmpWin in windows) {
-            if (tmpWin.windowLevel == UIWindowLevelNormal) {
-                window = tmpWin;
-                break;
-            }
-        }
-    }
-    
-    UIView *frontView = [[window subviews] objectAtIndex:0];
-    id nextResponder = [frontView nextResponder];
-    
-    if ([nextResponder isKindOfClass:[UIViewController class]]) {
-        result = nextResponder;
-    } else {
-        result = window.rootViewController;
-    }
-    return result;
-}
-
-- (UINavigationController *)currentNavC {
-    UINavigationController *result = nil;
-    id currentVC = [self currentVC];
-    if ([currentVC isKindOfClass:[UINavigationController class]]) {
-        result = currentVC;
-    } else if([currentVC isKindOfClass:[UITabBarController class]]) {
-        id vc = [(UITabBarController *)currentVC viewControllers][[(UITabBarController *)currentVC selectedIndex]];
-        if ([vc isKindOfClass:[UINavigationController class]]) {
-            result = vc;
-        } else {
-            result = [(UIViewController *)vc navigationController];
-        }
-    } else if([currentVC isKindOfClass:[UIViewController class]]) {
-        result = [(UIViewController *)currentVC navigationController];
-    }
-    return result;
 }
 
 @end

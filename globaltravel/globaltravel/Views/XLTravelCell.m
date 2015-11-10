@@ -60,9 +60,9 @@
     _travelInfo = travelInfo;
     
     if (_travelInfo) {
-        _imageView.image = [UIImage imageNamed:_travelInfo.imagePath];
+        [_imageView xl_setImageWithURL:_travelInfo.imagePath];
         _titleLabel.text = _travelInfo.title;
-        _dateLabel.text = [NSString stringWithFormat:@"发布日期：%@", _travelInfo.publishDate];
+        _dateLabel.text = [NSString stringWithFormat:@"%@", _travelInfo.publishDate];
         _contentLabel.text = _travelInfo.content;
     }
 }

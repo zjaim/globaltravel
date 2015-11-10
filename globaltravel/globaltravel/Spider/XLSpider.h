@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@interface TFHppleElement (Custom)
+
+- (TFHppleElement *)objectAtIndexedSubscript:(NSUInteger)idx;
+- (TFHppleElement *)objectForKeyedSubscript:(NSString *)key;
+
+@end
+
 @interface NSString (Spider)
 
 - (NSString *)matchedAttribute:(NSString *)attrName;
@@ -19,6 +26,7 @@
 
 + (XLSpider *)shareSpider;
 
-- (NSString *)spideURL:(NSString *)URLString;
+- (NSString *)spideStringWithURL:(NSString *)urlString;
+- (NSData *)spideDataWithURL:(NSString *)urlString;
 
 @end

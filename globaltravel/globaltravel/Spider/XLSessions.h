@@ -8,13 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-#define HTML_HOME @"http://www.bgtc.com.cn/"
+#define HTML_BASE @"http://www.bgtc.com.cn/"
 #define HTML_CACHE @"html"
+
+@interface NSData (Sessions)
+
+- (void)cacheToDisk:(NSString *)fileName;
+
+@end
 
 @interface NSString (Sessions)
 
 - (void)cacheToDisk:(NSString *)fileName;
-- (NSString *)getCacheFromDisk;
+- (NSString *)getCacheStringFromDisk;
+- (NSData *)getCacheDataFromDisk;
 - (NSString *)htmlPathString;
 - (NSString *)formatHtmlString;
 
@@ -25,5 +32,7 @@
 + (XLSessions *)shareSessions;
 
 - (void)getHomeDataSuccess:(void (^)(NSArray *netActivities, NSArray *netMarkets))success failed:(void (^)(void))failed;
+
+- (void)getTravelDataSuccess:(void (^)(NSArray *netTravels))success failed:(void (^)(void))failed;
 
 @end

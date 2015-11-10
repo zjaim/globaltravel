@@ -16,9 +16,11 @@
 #import "UIView+MGJKit.h"
 #import "XLWebImage.h"
 #import "XLLoader.h"
+#import "TFHpple.h"
 #import "XLSpider.h"
 #import "XLSessions.h"
 #import "XLURLHandler.h"
+#import "XLNavigationViewController.h"
 
 #define RGBACOLOR(r,g,b,a)    [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
 

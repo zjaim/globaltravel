@@ -18,6 +18,6 @@
 
 + (XLURLHandler *)shareHandler;
 
-- (void)handlerURL:(NSString *)urlString;
+- (void)handlerURL:(NSString *)urlString title:(NSString *)title;
 
 @end

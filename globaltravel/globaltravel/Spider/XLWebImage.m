@@ -17,7 +17,7 @@
         if ([imageURL hasPrefix:@"http://"] || [urlString hasPrefix:@"https://"]) {
             urlString = imageURL;
         } else {
-            urlString = [[NSString stringWithFormat:@"%@", HTML_HOME] stringByAppendingPathComponent:imageURL];
+            urlString = [[NSString stringWithFormat:@"%@", HTML_BASE] stringByAppendingPathComponent:imageURL];
         }
     }
     if (urlString && urlString.length > 0) {

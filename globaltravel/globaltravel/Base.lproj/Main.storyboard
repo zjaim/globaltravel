@@ -46,7 +46,7 @@
         <!--首页-->
         <scene sceneID="KyT-Nl-dHo">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2Vs-k5-IoU" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2Vs-k5-IoU" customClass="XLNavigationViewController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="首页" image="tabbar_home" id="Lmn-OE-Vkq"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QhR-kP-BUn">
@@ -103,7 +103,7 @@
         <!--客服-->
         <scene sceneID="22H-mL-6IC">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gUX-Wj-ZD8" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gUX-Wj-ZD8" customClass="XLNavigationViewController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="客服" image="tabbar_service" id="kHD-D6-zd1"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7nG-oz-3r5">
@@ -122,7 +122,7 @@
         <!--旅途-->
         <scene sceneID="0Xa-nZ-aS2">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="afC-RY-Mm2" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="afC-RY-Mm2" customClass="XLNavigationViewController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅途" image="tabbar_travel" id="15x-T3-osa"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LzG-4i-eqZ">
@@ -144,5 +144,4 @@
         <image name="tabbar_service" width="30" height="30"/>
         <image name="tabbar_travel" width="30" height="30"/>
     </resources>
-    <color key="tintColor" red="0.031372549020000001" green="0.41176470590000003" blue="0.74509803919999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>

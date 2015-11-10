@@ -16,14 +16,6 @@
 
 @implementation XLMarketInfo
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict {
-    if (self = [super init]) {
-        self.title = [dict stringValueOfKey:@"title"];
-        self.imagePath = [dict stringValueOfKey:@"img"];
-    }
-    return self;
-}
-
 - (instancetype)initWithSpiderString:(NSString *)string {
     if (self = [super init]) {
         _attributes = [NSMutableDictionary dictionary];

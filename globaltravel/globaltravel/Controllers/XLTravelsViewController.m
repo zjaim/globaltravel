@@ -14,7 +14,7 @@ NSString *const kXLTravelCell = @"XLTravelCell";
 @interface XLTravelsViewController () <UITableViewDelegate, UITableViewDataSource> {
     UITableView *_tableView;
     
-    NSMutableArray *_travels;
+    NSArray *_travels;
 }
 
 @end
@@ -53,17 +53,14 @@ NSString *const kXLTravelCell = @"XLTravelCell";
 }
 
 - (void)loadTravels {
-    if (!_travels) {
-        _travels = [NSMutableArray array];
-    }
-    [_travels removeAllObjects];
-    NSArray *localDatas = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Travels" ofType:@"plist"]];
-    for (id obj in localDatas) {
-        if ([obj isKindOfClass:[NSDictionary class]]) {
-            [_travels addObject:[[XLTravelInfo alloc] initWithDictionary:obj]];
-        }
-    }
-    [_tableView reloadData];
+    [self showLoader];
+    [[XLSessions shareSessions] getTravelDataSuccess:^(NSArray *netTravels) {
+        [self hideLoader];
+        _travels = [netTravels copy];
+        [_tableView reloadData];
+    } failed:^{
+        [self hideLoader];
+    }];
 }
 
 #pragma mark - UITableViewDelegate, UITableViewDataSource
@@ -87,7 +84,8 @@ NSString *const kXLTravelCell = @"XLTravelCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    __weak XLTravelInfo *travelInfo = _travels[indexPath.row];
+    [[XLURLHandler shareHandler] handlerURL:[travelInfo.linkURL urlString] title:travelInfo.title];
 }
 
 @end

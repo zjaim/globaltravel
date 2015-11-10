@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "XLNavigationViewController.h"
 #import <TencentOpenAPI/TencentOAuth.h>
 
 @interface AppDelegate ()

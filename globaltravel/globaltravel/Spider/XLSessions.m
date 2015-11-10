@@ -10,8 +10,31 @@
 
 #import "XLActivityInfo.h"
 #import "XLMarketInfo.h"
+#import "XLTravelInfo.h"
 
 #import "NSString+MD5.h"
+
+#define HTML_HOME @"index.html"
+#define HTML_TRAVEL @"travel.html"
+
+@implementation NSData (Sessions)
+
+- (void)cacheToDisk:(NSString *)fileName {
+    NSString *fileNameMD5 = [fileName MD5];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *directory = [[paths objectAtIndex:0] stringByAppendingPathComponent:HTML_CACHE];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDirectory = NO;
+    if (![fileManager fileExistsAtPath:directory isDirectory:&isDirectory]) {
+        [fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    NSString *path = [directory stringByAppendingPathComponent:fileNameMD5];
+    
+    [self writeToFile:path atomically:YES];
+}
+
+@end
 
 @implementation NSString (Sessions)
 
@@ -30,7 +53,7 @@
     [self writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
-- (NSString *)getCacheFromDisk {
+- (NSString *)getCacheStringFromDisk {
     NSString *fileNameMD5 = [self MD5];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
@@ -43,11 +66,24 @@
     return nil;
 }
 
+- (NSData *)getCacheDataFromDisk {
+    NSString *fileNameMD5 = [self MD5];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *path = [[[paths objectAtIndex:0] stringByAppendingPathComponent:HTML_CACHE] stringByAppendingPathComponent:fileNameMD5];
+    
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    if (data && data.length > 0) {
+        return data;
+    }
+    return nil;
+}
+
 - (NSString *)htmlPathString {
     if (self) {
-        return [NSString stringWithFormat:@"%@%@", HTML_HOME, self];
+        return [NSString stringWithFormat:@"%@%@", HTML_BASE, self];
     }
-    return HTML_HOME;
+    return HTML_BASE;
 }
 
 - (NSString *)formatHtmlString {
@@ -77,11 +113,12 @@
 
 - (void)getHomeDataSuccess:(void (^)(NSArray *, NSArray *))success failed:(void (^)(void))failed {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *homeString = [[XLSpider shareSpider] spideURL:HTML_HOME];
+        NSString *dataURL = [HTML_HOME htmlPathString];
+        NSString *homeString = [[XLSpider shareSpider] spideStringWithURL:dataURL];
         if (homeString && homeString.length > 0) {
-            [homeString cacheToDisk:HTML_CACHE];
+            [homeString cacheToDisk:dataURL];
         } else {
-            homeString = [HTML_CACHE getCacheFromDisk];
+            homeString = [dataURL getCacheStringFromDisk];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             if (homeString && homeString.length > 0) {
@@ -141,6 +178,32 @@
                 }];
                 
                 success(netActivities, netMarkets);
+            } else {
+                failed();
+            }
+        });
+    });
+}
+
+- (void)getTravelDataSuccess:(void (^)(NSArray *))success failed:(void (^)(void))failed {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *dataURL = [HTML_TRAVEL htmlPathString];
+        NSData *travelData = [[XLSpider shareSpider] spideDataWithURL:dataURL];
+        if (travelData && travelData.length > 0) {
+            [travelData cacheToDisk:dataURL];
+        } else {
+            travelData = [dataURL getCacheDataFromDisk];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSMutableArray *netTravels = [NSMutableArray array];
+            if (travelData && travelData.length > 0) {
+                TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:travelData];
+                NSArray *elements = [xpathParser searchWithXPathQuery:@"//div[@class='contbg']//div[@class='right']//div[@class='list']"];
+                for (TFHppleElement *element in elements) {
+                    [netTravels addObject:[[XLTravelInfo alloc] initWithElement:element]];
+                }
+                success(netTravels);
             } else {
                 failed();
             }
