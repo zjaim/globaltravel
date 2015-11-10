@@ -11,9 +11,11 @@
 @interface XLMarketInfo : NSObject
 
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *imagePath;
 @property (nonatomic, copy) NSString *linkURL;
+@property (nonatomic, copy, readonly) NSArray *brothers;
 
-- (instancetype)initWithSpiderString:(NSString *)string;
+- (instancetype)initWithElement:(TFHppleElement *)element;
 
 @end

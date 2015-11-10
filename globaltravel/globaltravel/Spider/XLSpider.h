@@ -11,14 +11,16 @@
 @interface TFHppleElement (Custom)
 
 - (TFHppleElement *)objectAtIndexedSubscript:(NSUInteger)idx;
+
+/**
+ * e.g. <div class='icon' src='./eg.png'><div class='sub'>text</div><a href='./eg.html'></div>
+ *
+ * [@"@div@"]  -->  <div class='sub'></div><a href='./eg.html'>
+ * [@"@class::sub@"]  -->  <div class='sub'></div><a href='./eg.html'>
+ * [@"class"] --> icon
+ * [@""] --> text
+ */
 - (TFHppleElement *)objectForKeyedSubscript:(NSString *)key;
-
-@end
-
-@interface NSString (Spider)
-
-- (NSString *)matchedAttribute:(NSString *)attrName;
-- (NSArray *)componentsSeparatedFromString:(NSString *)fromString toString:(NSString *)toString;
 
 @end
 
@@ -26,7 +28,6 @@
 
 + (XLSpider *)shareSpider;
 
-- (NSString *)spideStringWithURL:(NSString *)urlString;
 - (NSData *)spideDataWithURL:(NSString *)urlString;
 
 @end

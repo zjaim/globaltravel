@@ -38,34 +38,6 @@
 
 @implementation NSString (Sessions)
 
-- (void)cacheToDisk:(NSString *)fileName {
-    NSString *fileNameMD5 = [fileName MD5];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *directory = [[paths objectAtIndex:0] stringByAppendingPathComponent:HTML_CACHE];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL isDirectory = NO;
-    if (![fileManager fileExistsAtPath:directory isDirectory:&isDirectory]) {
-        [fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    NSString *path = [directory stringByAppendingPathComponent:fileNameMD5];
-    
-    [self writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
-}
-
-- (NSString *)getCacheStringFromDisk {
-    NSString *fileNameMD5 = [self MD5];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *path = [[[paths objectAtIndex:0] stringByAppendingPathComponent:HTML_CACHE] stringByAppendingPathComponent:fileNameMD5];
-    
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    if (data && data.length > 0) {
-        return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    }
-    return nil;
-}
-
 - (NSData *)getCacheDataFromDisk {
     NSString *fileNameMD5 = [self MD5];
     
@@ -114,69 +86,34 @@
 - (void)getHomeDataSuccess:(void (^)(NSArray *, NSArray *))success failed:(void (^)(void))failed {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *dataURL = [HTML_HOME htmlPathString];
-        NSString *homeString = [[XLSpider shareSpider] spideStringWithURL:dataURL];
-        if (homeString && homeString.length > 0) {
-            [homeString cacheToDisk:dataURL];
+        NSData *homeData = [[XLSpider shareSpider] spideDataWithURL:dataURL];
+        if (homeData && homeData.length > 0) {
+            [homeData cacheToDisk:dataURL];
         } else {
-            homeString = [dataURL getCacheStringFromDisk];
+            homeData = [dataURL getCacheDataFromDisk];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (homeString && homeString.length > 0) {
-                NSArray *activityItems = [homeString componentsSeparatedFromString:@"id=\"et-slider-wrapper\"" toString:@"class=\"clear\""];
-                NSMutableArray *activities = [NSMutableArray array];
-                [activityItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    if ([obj isKindOfClass:[NSString class]]) {
-                        NSMutableArray *activityStrings = [[(NSString *)obj componentsSeparatedByString:@"class=\"et-slide\""] mutableCopy];
-                        if (activityStrings && activityStrings.count > 1) {
-                            [activityStrings removeObjectAtIndex:0];
-                            [activities addObjectsFromArray:activityStrings];
-                        }
-                    }
-                }];
-
+            if (homeData && homeData.length > 0) {
+                TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:homeData];
                 NSMutableArray *netActivities = [NSMutableArray array];
-                [activities enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    if ([obj isKindOfClass:[NSString class]]) {
-                        [netActivities addObject:[[XLActivityInfo alloc] initWithSpiderString:obj]];
-                    }
-                }];
-                
-                NSArray *marketItems = [homeString componentsSeparatedFromString:@"class=\"banner_area\"" toString:@"</table>"];
-                NSMutableArray *markets = [NSMutableArray array];
-                [marketItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    if ([obj isKindOfClass:[NSString class]]) {
-                        NSMutableArray *marketSection = [NSMutableArray array];
-                        NSArray *marketSectionStrings = [(NSString *)obj componentsSeparatedFromString:@"<tr" toString:@"</tr>"];
-                        if (marketSectionStrings && marketSectionStrings.count > 0) {
-                            [marketSectionStrings enumerateObjectsUsingBlock:^(id obj1, NSUInteger idx1, BOOL *stop1) {
-                                if ([obj1 isKindOfClass:[NSString class]]) {
-                                    NSMutableArray *marketStrings = [[(NSString *)obj1  componentsSeparatedByString:@"class=\"imgarea\""] mutableCopy];
-                                    if (marketStrings && marketStrings.count > 1) {
-                                        [marketStrings removeObjectAtIndex:0];
-                                        [marketSection addObjectsFromArray:marketStrings];
-                                    }
-                                }
-                            }];
-                        }
-                        if (marketSection.count > 0) {
-                            [markets addObject:marketSection];
-                        }
-                    }
-                }];
+                NSArray *activities = [xpathParser searchWithXPathQuery:@"//div[@class='center2']//div[@class='banner']//div[@id='et-slider-wrapper']//div[@id='et-slides']//div[@class='et-slide']"];
+                for (TFHppleElement *activity in activities) {
+                    [netActivities addObject:[[XLActivityInfo alloc] initWithElement:activity]];
+                }
                 
                 NSMutableArray *netMarkets = [NSMutableArray array];
-                [markets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    if ([obj isKindOfClass:[NSArray class]]) {
-                        NSMutableArray *netMarketSection = [NSMutableArray array];
-                        [(NSArray *)obj enumerateObjectsUsingBlock:^(id obj1, NSUInteger idx1, BOOL *stop1) {
-                            [netMarketSection addObject:[[XLMarketInfo alloc] initWithSpiderString:obj1]];
+                NSArray *markets = [xpathParser searchWithXPathQuery:@"//div[@class='banner_area']//table//tr"];
+                for (TFHppleElement *market in markets) {
+                    NSMutableArray *netMarketSection = [NSMutableArray array];
+                    if (market.children && market.children.count > 0) {
+                        [market.children enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                            XLMarketInfo *markeInfo = [[XLMarketInfo alloc] initWithElement:obj];
+                            [netMarketSection addObject:markeInfo];
+                            [netMarketSection addObjectsFromArray:markeInfo.brothers];
                         }];
-                        if (netMarketSection.count > 0) {
-                            [netMarkets addObject:netMarketSection];
-                        }
                     }
-                }];
-                
+                    [netMarkets addObject:netMarketSection];
+                }
                 success(netActivities, netMarkets);
             } else {
                 failed();
@@ -199,9 +136,9 @@
             NSMutableArray *netTravels = [NSMutableArray array];
             if (travelData && travelData.length > 0) {
                 TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:travelData];
-                NSArray *elements = [xpathParser searchWithXPathQuery:@"//div[@class='contbg']//div[@class='right']//div[@class='list']"];
-                for (TFHppleElement *element in elements) {
-                    [netTravels addObject:[[XLTravelInfo alloc] initWithElement:element]];
+                NSArray *travels = [xpathParser searchWithXPathQuery:@"//div[@class='contbg']//div[@class='right']//div[@class='list']"];
+                for (TFHppleElement *travel in travels) {
+                    [netTravels addObject:[[XLTravelInfo alloc] initWithElement:travel]];
                 }
                 success(netTravels);
             } else {

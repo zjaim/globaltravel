@@ -17,15 +17,6 @@
     return nil;
 }
 
-
-/**
- * <div class='icon' src='./eg.png'><div class='sub'>text</div><a href='./eg.html'></div>
- *
- * [@"@div@"]  -->  <div class='sub'></div><a href='./eg.html'>
- * [@"@class::sub@"]  -->  <div class='sub'></div><a href='./eg.html'>
- * [@"class"] --> icon
- * [@""] --> text
- */
 - (TFHppleElement *)objectForKeyedSubscript:(NSString *)key {
     __block id result = nil;
     if (key && key.length > 0) {
@@ -34,25 +25,35 @@
             NSArray *kv = [key componentsSeparatedByString:@"::"];
             if (self && self.children && self.children.count > 0) {
                 if (kv && kv.count == 2) {
+                    NSMutableArray *elements = [NSMutableArray array];
                     [self.children enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                         if ([obj isKindOfClass:[TFHppleElement class]]) {
                             TFHppleElement *element = (TFHppleElement *)obj;
                             if ([element.attributes[kv[0]] isEqualToString:kv[1]]) {
-                                result = element;
-                                *stop = YES;
+                                [elements addObject:element];
                             }
                         }
                     }];
+                    if (elements.count > 1) {
+                        result = elements;
+                    } else if (elements.count == 1) {
+                        result = elements[0];
+                    }
                 } else if (kv && kv.count == 1) {
+                    NSMutableArray *elements = [NSMutableArray array];
                     [self.children enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                         if ([obj isKindOfClass:[TFHppleElement class]]) {
                             TFHppleElement *element = (TFHppleElement *)obj;
                             if ([element.tagName isEqualToString:kv[0]]) {
-                                result = element;
-                                *stop = YES;
+                                [elements addObject:element];
                             }
                         }
                     }];
+                    if (elements.count > 1) {
+                        result = elements;
+                    } else if (elements.count == 1) {
+                        result = elements[0];
+                    }
                 }
             }
         } else {
@@ -68,46 +69,6 @@
 
 @end
 
-@implementation NSString (Spider)
-
-- (NSString *)matchedAttribute:(NSString *)attrName {
-    NSString *tempString = self;
-    NSString *fromString = [NSString stringWithFormat:@"%@=\"", attrName];
-    NSString *toString = @"\"";
-    NSRange range = [tempString rangeOfString:fromString];
-    while (range.location != NSNotFound) {
-        tempString = [tempString substringFromIndex:(range.location + range.length)];
-        range = [tempString rangeOfString:toString];
-        if (range.location != NSNotFound) {
-            return [tempString substringToIndex:range.location];
-        }
-    }
-    return nil;
-}
-
-- (NSArray *)componentsSeparatedFromString:(NSString *)fromString toString:(NSString *)toString
-{
-    if (!fromString || !toString || fromString.length == 0 || toString.length == 0) {
-        return nil;
-    }
-    NSMutableArray *subStringsArray = [[NSMutableArray alloc] init];
-    NSString *tempString = self;
-    NSRange range = [tempString rangeOfString:fromString];
-    while (range.location != NSNotFound) {
-        tempString = [tempString substringFromIndex:(range.location + range.length)];
-        range = [tempString rangeOfString:toString];
-        if (range.location != NSNotFound) {
-            [subStringsArray addObject:[tempString substringToIndex:range.location]];
-            range = [tempString rangeOfString:fromString];
-        } else {
-            break;
-        }
-    }
-    return subStringsArray;
-}
-
-@end
-
 @implementation XLSpider
 
 + (XLSpider *)shareSpider {
@@ -119,19 +80,6 @@
         });
     }
     return sharedSpider;
-}
-
-- (NSString *)spideStringWithURL:(NSString *)urlString {
-    NSError *error = nil;
-    // CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000)
-    NSString *htmlString = [NSString stringWithContentsOfURL:[NSURL URLWithString:urlString] encoding:NSUTF8StringEncoding error:&error];
-    if (error) {
-        return nil;
-    }
-    if (htmlString && htmlString.length > 0) {
-        return [htmlString copy];
-    }
-    return nil;
 }
 
 - (NSData *)spideDataWithURL:(NSString *)urlString {

@@ -16,21 +16,6 @@
 
 @implementation XLTravelInfo
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict {
-    if (self = [super init]) {
-        id value = dict[@"date"];
-        if ([value isKindOfClass:[NSDate class]]) {
-            NSDateFormatter *dateFormatter = [NSDateFormatter new];
-            dateFormatter.dateFormat = @"yyyy年M月";
-            self.publishDate = [dateFormatter stringFromDate:value];
-        }
-        self.title = [dict stringValueOfKey:@"title"];
-        self.content = [dict stringValueOfKey:@"content"];
-        self.imagePath = [dict stringValueOfKey:@"img"];
-    }
-    return self;
-}
-
 - (instancetype)initWithElement:(TFHppleElement *)element {
     if (self = [super init]) {
         _attributes = [NSMutableDictionary dictionary];

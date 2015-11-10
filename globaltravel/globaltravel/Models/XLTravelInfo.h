@@ -16,7 +16,6 @@
 @property (nonatomic, copy) NSString *imagePath;
 @property (nonatomic, copy) NSString *linkURL;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict;
 - (instancetype)initWithElement:(TFHppleElement *)element;
 
 @end

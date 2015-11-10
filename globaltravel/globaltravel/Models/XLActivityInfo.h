@@ -13,6 +13,6 @@
 @property (nonatomic, copy) NSString *imagePath;
 @property (nonatomic, copy) NSString *linkURL;
 
-- (instancetype)initWithSpiderString:(NSString *)string;
+- (instancetype)initWithElement:(TFHppleElement *)element;
 
 @end

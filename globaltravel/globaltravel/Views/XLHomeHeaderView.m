@@ -64,8 +64,8 @@
 }
 
 - (void)sliderView:(AMSlideView *)sliderView didSelectViewAtIndex:(NSInteger)index {
-    
+    __weak XLActivityInfo *activityInfo = _activities[index];
+    [[XLURLHandler shareHandler] handlerURL:[activityInfo.linkURL urlString] title:nil];
 }
-
 
 @end

@@ -19,8 +19,6 @@
 
 @interface NSString (Sessions)
 
-- (void)cacheToDisk:(NSString *)fileName;
-- (NSString *)getCacheStringFromDisk;
 - (NSData *)getCacheDataFromDisk;
 - (NSString *)htmlPathString;
 - (NSString *)formatHtmlString;
