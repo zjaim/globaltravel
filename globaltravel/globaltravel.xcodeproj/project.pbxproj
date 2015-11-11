@@ -64,6 +64,8 @@
 		9BABB0F71BF04588001332EB /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BABB0E61BF04588001332EB /* UIImageView+WebCache.m */; };
 		9BABB0F81BF04588001332EB /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BABB0E81BF04588001332EB /* UIView+WebCacheOperation.m */; };
 		9BABB0FB1BF04831001332EB /* XLHomeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BABB0FA1BF04831001332EB /* XLHomeHeaderView.m */; };
+		9BAE88311BF34AC100203D45 /* NSString+UrlEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAE88301BF34AC100203D45 /* NSString+UrlEncode.m */; };
+		9BAE88341BF34E4400203D45 /* XLNewsInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAE88331BF34E4400203D45 /* XLNewsInfo.m */; };
 		9BEED9D81BEF722F0026F169 /* XLTravelsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEED9D71BEF722F0026F169 /* XLTravelsViewController.m */; };
 		9BEED9E11BEF75660026F169 /* XLMarketCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEED9E01BEF75660026F169 /* XLMarketCell.m */; };
 		9BEED9E41BEF7C2F0026F169 /* XLMarketInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEED9E31BEF7C2F0026F169 /* XLMarketInfo.m */; };
@@ -180,6 +182,10 @@
 		9BABB0E81BF04588001332EB /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		9BABB0F91BF04831001332EB /* XLHomeHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLHomeHeaderView.h; sourceTree = "<group>"; };
 		9BABB0FA1BF04831001332EB /* XLHomeHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLHomeHeaderView.m; sourceTree = "<group>"; };
+		9BAE882F1BF34AC100203D45 /* NSString+UrlEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UrlEncode.h"; sourceTree = "<group>"; };
+		9BAE88301BF34AC100203D45 /* NSString+UrlEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UrlEncode.m"; sourceTree = "<group>"; };
+		9BAE88321BF34E4400203D45 /* XLNewsInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLNewsInfo.h; sourceTree = "<group>"; };
+		9BAE88331BF34E4400203D45 /* XLNewsInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLNewsInfo.m; sourceTree = "<group>"; };
 		9BEED9D61BEF722F0026F169 /* XLTravelsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLTravelsViewController.h; sourceTree = "<group>"; };
 		9BEED9D71BEF722F0026F169 /* XLTravelsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLTravelsViewController.m; sourceTree = "<group>"; };
 		9BEED9DF1BEF75660026F169 /* XLMarketCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLMarketCell.h; sourceTree = "<group>"; };
@@ -322,6 +328,8 @@
 		9B4C22E51BEF3ED7005E8387 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				9BAE882F1BF34AC100203D45 /* NSString+UrlEncode.h */,
+				9BAE88301BF34AC100203D45 /* NSString+UrlEncode.m */,
 				9B4C233E1BEF5E31005E8387 /* NSDictionary+AM.h */,
 				9B4C233F1BEF5E31005E8387 /* NSDictionary+AM.m */,
 				9B4C22E61BEF3ED7005E8387 /* UIView+MGJKit.h */,
@@ -354,6 +362,8 @@
 				9BEED9F81BEFA1E80026F169 /* XLActivityInfo.m */,
 				9BEED9FD1BEFBE340026F169 /* XLTravelInfo.h */,
 				9BEED9FE1BEFBE340026F169 /* XLTravelInfo.m */,
+				9BAE88321BF34E4400203D45 /* XLNewsInfo.h */,
+				9BAE88331BF34E4400203D45 /* XLNewsInfo.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -611,6 +621,7 @@
 				9B4C231D1BEF5197005E8387 /* XLServiceCell.m in Sources */,
 				9BABB0F01BF04588001332EB /* SDWebImageManager.m in Sources */,
 				9BABB0ED1BF04588001332EB /* SDWebImageDecoder.m in Sources */,
+				9BAE88311BF34AC100203D45 /* NSString+UrlEncode.m in Sources */,
 				9BEED9D81BEF722F0026F169 /* XLTravelsViewController.m in Sources */,
 				9BEED9FF1BEFBE340026F169 /* XLTravelInfo.m in Sources */,
 				9BA10FAD1BF1A708002DAAEE /* XLSpider.m in Sources */,
@@ -634,6 +645,7 @@
 				9BABB0EE1BF04588001332EB /* SDWebImageDownloader.m in Sources */,
 				9B4C22E31BEF3C89005E8387 /* AMSlideView.m in Sources */,
 				9B4C22C31BEF2ED3005E8387 /* main.m in Sources */,
+				9BAE88341BF34E4400203D45 /* XLNewsInfo.m in Sources */,
 				9BABB0F41BF04588001332EB /* UIImage+MultiFormat.m in Sources */,
 				9BA10FD01BF2059E002DAAEE /* NSString+MD5.m in Sources */,
 				9BABB0F21BF04588001332EB /* UIButton+WebCache.m in Sources */,

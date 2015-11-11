@@ -19,6 +19,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self commonConfig];
+    
+    [[XLSessions shareSessions] getNewsDataSuccess:^(NSArray *netNewses) {
+        
+    } failed:^{
+        
+    }];
+    
     return YES;
 }
 

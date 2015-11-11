@@ -17,8 +17,6 @@
     
     UILabel *_descLabel;
     UIView *_descBgView;
-    
-    BOOL _animating;
 }
 
 @end
@@ -54,7 +52,6 @@
         _descBgView = [[UIView alloc] initWithFrame:CGRectMake(0.5, 0.5, self.width - 1, self.height - 20.5)];
         _descBgView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.35];
         _descBgView.hidden = YES;
-        _descBgView.bottom = 0;
         
         _descLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, _descBgView.width - 20, _descBgView.height - 20)];
         _descLabel.font = FONT(11);
@@ -64,8 +61,6 @@
         [_descBgView addSubview:_descLabel];
         
         [contentView addSubview:_descBgView];
-        
-        _animating = NO;
     }
     return self;
 }
@@ -83,37 +78,15 @@
         }
         _descLabel.text = _marketInfo.content;
         if (_descLabel.text && _descLabel.text.length > 0) {
-            _descBgView.hidden = NO;
-            [self startAnimate];
+            if (_marketInfo.contentShown) {
+                _descBgView.hidden = NO;
+            } else {
+                _descBgView.hidden = YES;
+            }
         } else {
             _descBgView.hidden = YES;
-            [self stopAnimate];
         }
     }
-}
-
-- (void)startAnimate {
-    _animating = YES;
-    [self performSelector:@selector(runAnimate) withObject:nil afterDelay:10 + (arc4random() % 10)];
-}
-
-- (void)runAnimate {
-    if (!_animating) {
-        return;
-    }
-    [UIView animateWithDuration:1 animations:^{
-        _descBgView.top = 0.5;
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:1 delay:10 + (arc4random() % 10) options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionTransitionNone animations:^{
-            _descBgView.bottom = 0;
-        } completion:^(BOOL finished) {
-            [self performSelector:_cmd withObject:nil afterDelay:10 + (arc4random() % 10)];
-        }];
-    }];
-}
-
-- (void)stopAnimate {
-    _animating = NO;
 }
 
 @end

@@ -11,11 +11,16 @@
 #import "XLActivityInfo.h"
 #import "XLMarketInfo.h"
 #import "XLTravelInfo.h"
+#import "XLNewsInfo.h"
 
+#import "NSString+UrlEncode.h"
 #import "NSString+MD5.h"
 
 #define HTML_HOME @"index.html"
 #define HTML_TRAVEL @"travel.html"
+
+#define NEWS_BAIDU @"http://news.baidu.com/ns?cl=2&rn=20&tn=news&word="
+#define NEWS_WORDS @"北京时代环球国际旅游有限公司"
 
 @implementation NSData (Sessions)
 
@@ -81,6 +86,38 @@
         });
     }
     return sharedSessions;
+}
+
+- (void)getNewsDataSuccess:(void (^)(NSArray *))success failed:(void (^)(void))failed {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *dataURL = [NSString stringWithFormat:@"%@%@", NEWS_BAIDU, [NEWS_WORDS urlEncode]];
+        NSString *newsString = [[XLSpider shareSpider] spideStringWithURL:dataURL encoding:NSUTF8StringEncoding];
+        newsString = [newsString stringByReplacingOccurrencesOfString:@"<em>" withString:@"@keyword-start@"];
+        newsString = [newsString stringByReplacingOccurrencesOfString:@"</em>" withString:@"@keyword-end@"];
+        NSData *newsData = nil;
+        if (newsString && newsString.length > 0) {
+            newsData = [newsString dataUsingEncoding:NSUTF8StringEncoding];
+        }
+        if (newsData && newsData.length > 0) {
+            [newsData cacheToDisk:dataURL];
+        } else {
+            newsData = [dataURL getCacheDataFromDisk];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (newsData && newsData.length > 0) {
+                TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:newsData];
+                NSMutableArray *netNewses = [NSMutableArray array];
+                NSArray *newses = [xpathParser searchWithXPathQuery:@"//div[@id='content_left']//div//div[@class='result']"];
+                for (TFHppleElement *news in newses) {
+                    [netNewses addObject:[[XLNewsInfo alloc] initWithElement:news]];
+                }
+                success(netNewses);
+            } else {
+                failed();
+            }
+        });
+    });
+    
 }
 
 - (void)getHomeDataSuccess:(void (^)(NSArray *, NSArray *))success failed:(void (^)(void))failed {

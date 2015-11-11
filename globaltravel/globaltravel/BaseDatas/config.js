@@ -7,14 +7,14 @@ function increaseMaxZoomFactor() {
 }
 
 function getElementsClass(classnames){
-    var classobj= new Array();
-    var classint=0;
-    var tags=document.getElementsByTagName("*");
+    var classobj = new Array();
+    var classint = 0;
+    var tags = document.getElementsByTagName("*");
     for(var i in tags){
-        if(tags[i].nodeType==1){
+        if(tags[i].nodeType == 1){
             if(tags[i].getAttribute("class") == classnames)
             {
-                classobj[classint]=tags[i];
+                classobj[classint] = tags[i];
                 classint++;
             }
         }

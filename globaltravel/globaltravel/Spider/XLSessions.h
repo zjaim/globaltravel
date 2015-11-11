@@ -29,6 +29,8 @@
 
 + (XLSessions *)shareSessions;
 
+- (void)getNewsDataSuccess:(void (^)(NSArray *netNewses))success failed:(void (^)(void))failed;
+
 - (void)getHomeDataSuccess:(void (^)(NSArray *netActivities, NSArray *netMarkets))success failed:(void (^)(void))failed;
 
 - (void)getTravelDataSuccess:(void (^)(NSArray *netTravels))success failed:(void (^)(void))failed;

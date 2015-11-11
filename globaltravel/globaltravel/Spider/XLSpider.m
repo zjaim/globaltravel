@@ -82,6 +82,19 @@
     return sharedSpider;
 }
 
+
+- (NSString *)spideStringWithURL:(NSString *)urlString encoding:(NSStringEncoding)encode {
+    NSError *error = nil;
+    NSString *string = [NSString stringWithContentsOfURL:[NSURL URLWithString:urlString] encoding:encode error:&error];
+    if (error) {
+        return nil;
+    }
+    if (string && string.length > 0) {
+        return string;
+    }
+    return nil;
+}
+
 - (NSData *)spideDataWithURL:(NSString *)urlString {
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlString]];
     if (data && data.length > 0) {

@@ -19,9 +19,7 @@
 
 - (instancetype)initWithElement:(TFHppleElement *)element {
     if (self = [super init]) {
-        _attributes = [NSMutableDictionary dictionary];
         _brothersMutable = [NSMutableArray array];
-        
         id imgArea = element[@"@class::imgarea@"];
         if ([imgArea isKindOfClass:[NSArray class]]) {
             if ([imgArea count] > 0) {
@@ -44,6 +42,13 @@
 }
 
 - (void)configMarket:(TFHppleElement *)element {
+    if (!_attributes) {
+        _attributes = [NSMutableDictionary dictionary];
+    } else {
+        [_attributes removeAllObjects];
+    }
+    _contentShown = NO;
+    
     id img = element[@"@a@"][0][@"@img@"][@"src"];
     if (!img || [img length] == 0) {
         img = element[@"@a@"][@"@img@"][@"src"];
@@ -73,9 +78,6 @@
         link = element.parent[@"@class::imgarea_text@"][@"@h5@"][@"@a@"][@"href"];
     }
     self.linkURL = link;
-    
-    NSLog(@"%@", content);
-    
 }
 
 - (void)setTitle:(NSString *)title {

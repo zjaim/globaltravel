@@ -28,6 +28,7 @@
 
 + (XLSpider *)shareSpider;
 
+- (NSString *)spideStringWithURL:(NSString *)urlString encoding:(NSStringEncoding)encode;
 - (NSData *)spideDataWithURL:(NSString *)urlString;
 
 @end
