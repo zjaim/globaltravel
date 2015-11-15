@@ -85,7 +85,7 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
-        [[[AMNoticeView alloc] initWithMessage:@"此功能尚未开启"] showWithDuration:3.0f];
+//        [[[AMNoticeView alloc] initWithMessage:@"此功能尚未开启"] showWithDuration:3.0f];
         return NO;
     }
     return YES;

@@ -26,7 +26,7 @@
 
 @interface XLSpider : NSObject
 
-+ (XLSpider *)shareSpider;
+DEFINE_SINGLETON_FOR_HEADER(XLSpider)
 
 - (NSString *)spideStringWithURL:(NSString *)urlString encoding:(NSStringEncoding)encode;
 - (NSData *)spideDataWithURL:(NSString *)urlString;

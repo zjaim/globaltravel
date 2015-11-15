@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XLCommon.h"
 
 #define HTML_BASE @"http://www.bgtc.com.cn/"
 #define HTML_CACHE @"html"
@@ -27,7 +28,7 @@
 
 @interface XLSessions : NSObject
 
-+ (XLSessions *)shareSessions;
+DEFINE_SINGLETON_FOR_HEADER(XLSessions)
 
 - (void)getNewsDataSuccess:(void (^)(NSArray *netNewses))success failed:(void (^)(void))failed;
 

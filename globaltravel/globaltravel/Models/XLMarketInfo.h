@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface XLMarketInfo : NSObject
+@interface XLMarketInfo : XLModelInfo
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *content;

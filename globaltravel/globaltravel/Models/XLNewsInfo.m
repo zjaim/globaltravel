@@ -8,18 +8,10 @@
 
 #import "XLNewsInfo.h"
 
-@interface XLNewsInfo () {
-    NSMutableDictionary *_attributes;
-}
-
-@end
-
 @implementation XLNewsInfo
 
 - (instancetype)initWithElement:(TFHppleElement *)element {
     if (self = [super init]) {
-        _attributes = [NSMutableDictionary dictionary];
-        
         id title = element[@"@class::c-title@"][@"@a@"][@""];
         self.title = title;
         
@@ -41,53 +33,33 @@
 - (void)setTitle:(NSString *)title {
     if ([title isKindOfClass:[NSString class]]) {
         _title = [title copy];
-        if (_title && _title.length > 0) {
-            [_attributes setObject:_title forKey:@"title"];
-            return;
-        }
+    } else {
+        _title = nil;
     }
-    _title = nil;
-    [_attributes removeObjectForKey:@"title"];
 }
 
 - (void)setSource:(NSString *)source {
     if ([source isKindOfClass:[NSString class]]) {
         _source = [source copy];
-        if (_source && _source.length > 0) {
-            [_attributes setObject:_source forKey:@"source"];
-            return;
-        }
+    } else {
+        _source = nil;
     }
-    _source = nil;
-    [_attributes removeObjectForKey:@"source"];
 }
 
 - (void)setContent:(NSString *)content {
     if ([content isKindOfClass:[NSString class]]) {
         _content = [content copy];
-        if (_content && _content.length > 0) {
-            [_attributes setObject:_content forKey:@"content"];
-            return;
-        }
+    } else {
+        _content = nil;
     }
-    _content = nil;
-    [_attributes removeObjectForKey:@"content"];
 }
 
 - (void)setLinkURL:(NSString *)linkURL {
     if ([linkURL isKindOfClass:[NSString class]]) {
         _linkURL = [linkURL copy];
-        if (_linkURL && _linkURL.length > 0) {
-            [_attributes setObject:_linkURL forKey:@"linkURL"];
-            return;
-        }
+    } else {
+        _linkURL = nil;
     }
-    _linkURL = nil;
-    [_attributes removeObjectForKey:@"linkURL"];
-}
-
-- (NSString *)description {
-    return [NSString stringWithFormat:@"%@ - Attributes:%@", NSStringFromClass([XLNewsInfo class]), _attributes];
 }
 
 @end

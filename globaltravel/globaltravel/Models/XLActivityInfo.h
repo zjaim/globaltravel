@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface XLActivityInfo : NSObject
+@interface XLActivityInfo : XLModelInfo
 
 @property (nonatomic, copy) NSString *imagePath;
 @property (nonatomic, copy) NSString *linkURL;

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface XLServiceInfo : NSObject
+@interface XLServiceInfo : XLModelInfo
 
 @property (nonatomic, copy) NSString *qqNum;
 @property (nonatomic, copy) NSString *title;

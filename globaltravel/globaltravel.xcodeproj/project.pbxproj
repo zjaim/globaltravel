@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B28E37A1BF834D6006697AB /* XLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B28E3791BF834D6006697AB /* XLParser.m */; };
+		9B28E37E1BF83639006697AB /* XLCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B28E37D1BF83639006697AB /* XLCommon.m */; };
+		9B28E3811BF84B9F006697AB /* XLModelInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B28E3801BF84B9F006697AB /* XLModelInfo.m */; };
+		9B28E3851BF85812006697AB /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B28E3841BF85812006697AB /* JRSwizzle.m */; };
 		9B4C22C31BEF2ED3005E8387 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4C22C21BEF2ED3005E8387 /* main.m */; };
 		9B4C22C61BEF2ED3005E8387 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4C22C51BEF2ED3005E8387 /* AppDelegate.m */; };
 		9B4C22CC1BEF2ED3005E8387 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B4C22CA1BEF2ED3005E8387 /* Main.storyboard */; };
@@ -81,6 +85,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B28E3781BF834D5006697AB /* XLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLParser.h; sourceTree = "<group>"; };
+		9B28E3791BF834D6006697AB /* XLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLParser.m; sourceTree = "<group>"; };
+		9B28E37C1BF83639006697AB /* XLCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLCommon.h; sourceTree = "<group>"; };
+		9B28E37D1BF83639006697AB /* XLCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLCommon.m; sourceTree = "<group>"; };
+		9B28E37F1BF84B9F006697AB /* XLModelInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLModelInfo.h; sourceTree = "<group>"; };
+		9B28E3801BF84B9F006697AB /* XLModelInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLModelInfo.m; sourceTree = "<group>"; };
+		9B28E3831BF85812006697AB /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
+		9B28E3841BF85812006697AB /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
 		9B4C22BE1BEF2ED3005E8387 /* globaltravel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = globaltravel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B4C22C21BEF2ED3005E8387 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9B4C22C41BEF2ED3005E8387 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../AppDelegate.h; sourceTree = "<group>"; };
@@ -228,6 +240,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B28E3821BF85812006697AB /* JRSwizzle */ = {
+			isa = PBXGroup;
+			children = (
+				9B28E3831BF85812006697AB /* JRSwizzle.h */,
+				9B28E3841BF85812006697AB /* JRSwizzle.m */,
+			);
+			path = JRSwizzle;
+			sourceTree = "<group>";
+		};
 		9B4C22B51BEF2ED3005E8387 = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +323,7 @@
 		9B4C22DD1BEF3C89005E8387 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				9B28E3821BF85812006697AB /* JRSwizzle */,
 				9BA10FC11BF2059E002DAAEE /* Hpple */,
 				9BA10FC91BF2059E002DAAEE /* MD5 */,
 				9BA10FB41BF1C917002DAAEE /* MBProgressHUD */,
@@ -364,6 +386,8 @@
 				9BEED9FE1BEFBE340026F169 /* XLTravelInfo.m */,
 				9BAE88321BF34E4400203D45 /* XLNewsInfo.h */,
 				9BAE88331BF34E4400203D45 /* XLNewsInfo.m */,
+				9B28E37F1BF84B9F006697AB /* XLModelInfo.h */,
+				9B28E3801BF84B9F006697AB /* XLModelInfo.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -433,6 +457,8 @@
 			children = (
 				9B8173551BF2445900781FB5 /* XLNavigationViewController.h */,
 				9B8173561BF2445900781FB5 /* XLNavigationViewController.m */,
+				9B28E37C1BF83639006697AB /* XLCommon.h */,
+				9B28E37D1BF83639006697AB /* XLCommon.m */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -444,6 +470,8 @@
 				9BA10FAC1BF1A708002DAAEE /* XLSpider.m */,
 				9BA10FAE1BF1BB23002DAAEE /* XLSessions.h */,
 				9BA10FAF1BF1BB23002DAAEE /* XLSessions.m */,
+				9B28E3781BF834D5006697AB /* XLParser.h */,
+				9B28E3791BF834D6006697AB /* XLParser.m */,
 				9BA10FB11BF1C01A002DAAEE /* XLWebImage.h */,
 				9BA10FB21BF1C01A002DAAEE /* XLWebImage.m */,
 				9BA10FBB1BF1CA36002DAAEE /* XLLoader.h */,
@@ -609,6 +637,7 @@
 			files = (
 				9BABB0F81BF04588001332EB /* UIView+WebCacheOperation.m in Sources */,
 				9B4C233D1BEF5BC7005E8387 /* AMNoticeView.m in Sources */,
+				9B28E37E1BF83639006697AB /* XLCommon.m in Sources */,
 				9BA10FCF1BF2059E002DAAEE /* XPathQuery.m in Sources */,
 				9B4C22C61BEF2ED3005E8387 /* AppDelegate.m in Sources */,
 				9BABB0F61BF04588001332EB /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -630,14 +659,17 @@
 				9BEEDA021BEFBE530026F169 /* XLTravelCell.m in Sources */,
 				9BA10FB31BF1C01A002DAAEE /* XLWebImage.m in Sources */,
 				9B4C23401BEF5E31005E8387 /* NSDictionary+AM.m in Sources */,
+				9B28E3811BF84B9F006697AB /* XLModelInfo.m in Sources */,
 				9BEED9FC1BEFA2150026F169 /* XLActivityView.m in Sources */,
 				9BABB0F31BF04588001332EB /* UIImage+GIF.m in Sources */,
 				9BABB0F51BF04588001332EB /* UIImage+WebP.m in Sources */,
 				9BABB0EA1BF04588001332EB /* NSData+ImageContentType.m in Sources */,
+				9B28E37A1BF834D6006697AB /* XLParser.m in Sources */,
 				9BA10FCE1BF2059E002DAAEE /* TFHppleElement.m in Sources */,
 				9BA10FB01BF1BB23002DAAEE /* XLSessions.m in Sources */,
 				9BABB0EC1BF04588001332EB /* SDWebImageCompat.m in Sources */,
 				9B4C22DC1BEF37E7005E8387 /* XLHomeViewController.m in Sources */,
+				9B28E3851BF85812006697AB /* JRSwizzle.m in Sources */,
 				9BA10FC01BF20383002DAAEE /* XLWebViewController.m in Sources */,
 				9B4C231A1BEF5179005E8387 /* XLServiceInfo.m in Sources */,
 				9BABB0EB1BF04588001332EB /* SDImageCache.m in Sources */,

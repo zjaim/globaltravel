@@ -30,16 +30,7 @@
 
 @implementation XLURLHandler
 
-+ (XLURLHandler *)shareHandler {
-    static XLURLHandler* shareHandler = nil;
-    if (!shareHandler) {
-        static dispatch_once_t once = 0;
-        dispatch_once(&once, ^{
-            shareHandler = [[XLURLHandler alloc] init];
-        });
-    }
-    return shareHandler;
-}
+DEFINE_SINGLETON_FOR_CLASS(XLURLHandler)
 
 - (void)handlerURL:(NSString *)urlString title:(NSString *)title {
     if (urlString && urlString.length > 0) {

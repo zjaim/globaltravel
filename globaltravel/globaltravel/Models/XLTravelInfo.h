@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface XLTravelInfo : NSObject
+@interface XLTravelInfo : XLModelInfo
 
 @property (nonatomic, copy) NSString *publishDate;
 @property (nonatomic, copy) NSString *title;

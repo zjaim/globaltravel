@@ -20,7 +20,7 @@
     // Override point for customization after application launch.
     [self commonConfig];
     
-    [[XLSessions shareSessions] getNewsDataSuccess:^(NSArray *netNewses) {
+    [[XLSessions sharedInstance] getNewsDataSuccess:^(NSArray *netNewses) {
         
     } failed:^{
         

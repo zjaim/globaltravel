@@ -8,17 +8,10 @@
 
 #import "XLTravelInfo.h"
 
-@interface XLTravelInfo () {
-    NSMutableDictionary *_attributes;
-}
-
-@end
-
 @implementation XLTravelInfo
 
 - (instancetype)initWithElement:(TFHppleElement *)element {
     if (self = [super init]) {
-        _attributes = [NSMutableDictionary dictionary];
         id img = element[@"@class::listimg@"][@"@img@"][@"src"];
         self.imagePath = img;
         
@@ -47,65 +40,40 @@
 - (void)setPublishDate:(NSString *)publishDate {
     if ([publishDate isKindOfClass:[NSString class]]) {
         _publishDate = [publishDate copy];
-        if (_publishDate && _publishDate.length > 0) {
-            [_attributes setObject:_publishDate forKey:@"publishDate"];
-            return;
-        }
+    } else {
+        _publishDate = nil;
     }
-    _publishDate = nil;
-    [_attributes removeObjectForKey:@"publishDate"];
-}
-
-- (void)setTitle:(NSString *)title {
-    if ([title isKindOfClass:[NSString class]]) {
-        _title = [title copy];
-        if (_title && _title.length > 0) {
-            [_attributes setObject:_title forKey:@"title"];
-            return;
-        }
-    }
-    _title = nil;
-    [_attributes removeObjectForKey:@"title"];
-}
-
-- (void)setContent:(NSString *)content {
-    if ([content isKindOfClass:[NSString class]]) {
-        _content = [content copy];
-        if (_content && _content.length > 0) {
-            [_attributes setObject:_content forKey:@"content"];
-            return;
-        }
-    }
-    _content = nil;
-    [_attributes removeObjectForKey:@"content"];
 }
 
 - (void)setImagePath:(NSString *)imagePath {
     if ([imagePath isKindOfClass:[NSString class]]) {
         _imagePath = [imagePath copy];
-        if (_imagePath && _imagePath.length > 0) {
-            [_attributes setObject:_imagePath forKey:@"imagePath"];
-            return;
-        }
+    } else {
+        _imagePath = nil;
     }
-    _imagePath = nil;
-    [_attributes removeObjectForKey:@"imagePath"];
+}
+
+- (void)setTitle:(NSString *)title {
+    if ([title isKindOfClass:[NSString class]]) {
+        _title = [title copy];
+    } else {
+        _title = nil;
+    }
+}
+
+- (void)setContent:(NSString *)content {
+    if ([content isKindOfClass:[NSString class]]) {
+        _content = [content copy];
+    } else {
+        _content = nil;
+    }
 }
 
 - (void)setLinkURL:(NSString *)linkURL {
     if ([linkURL isKindOfClass:[NSString class]]) {
         _linkURL = [linkURL copy];
-        if (_linkURL && _linkURL.length > 0) {
-            [_attributes setObject:_linkURL forKey:@"linkURL"];
-            return;
-        }
+    } else {
+        _linkURL = nil;
     }
-    _linkURL = nil;
-    [_attributes removeObjectForKey:@"linkURL"];
 }
-
-- (NSString *)description {
-    return [NSString stringWithFormat:@"%@ - Attributes:%@", NSStringFromClass([XLTravelInfo class]), _attributes];
-}
-
 @end

@@ -12,7 +12,7 @@
 #import "XLMarketCell.h"
 #import "XLMarketInfo.h"
 
-#define kColumnNumber 3
+#define kColumnNumber (SCREEN_WIDTH > 320 ? 3 : 2)
 #define kMargenHorizontal 10
 #define kGapHorizontal 10
 
@@ -70,10 +70,13 @@ NSString *const kXLMarketCell = @"XLMarketCell";
 
 - (void)loadNetData {
     [self showLoader];
-    [[XLSessions shareSessions] getHomeDataSuccess:^(NSArray *netActivities, NSArray *netMarkets) {
+    [[XLSessions sharedInstance] getHomeDataSuccess:^(NSArray *netActivities, NSArray *netMarkets) {
         [self hideLoader];
         _activities = [netActivities copy];
         _markets = [netMarkets copy];
+        for (id obj in _markets) {
+            NSLog(@"\n%@\n", [obj description]);
+        }
         [_collectionView reloadData];
     } failed:^{
         [self hideLoader];
@@ -154,15 +157,22 @@ NSString *const kXLMarketCell = @"XLMarketCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section > 0) {
         __weak XLMarketInfo *marketInfo = _markets[indexPath.section - 1][indexPath.item];
-        if (marketInfo.contentShown) {
-            marketInfo.contentShown = NO;
-            [collectionView reloadItemsAtIndexPaths:@[indexPath]];
-            [[XLURLHandler shareHandler] handlerURL:[marketInfo.linkURL urlString] title:marketInfo.title];
+        BOOL detailEntry = NO;
+        if (marketInfo.content && marketInfo.content.length > 0) {
+            if (marketInfo.contentShown) {
+                marketInfo.contentShown = NO;
+                detailEntry = YES;
+                [collectionView reloadItemsAtIndexPaths:@[indexPath]];
+            } else {
+                marketInfo.contentShown = YES;
+                [collectionView reloadItemsAtIndexPaths:@[indexPath]];
+            }
         } else {
-            marketInfo.contentShown = YES;
-            [collectionView reloadItemsAtIndexPaths:@[indexPath]];
+            detailEntry = YES;
         }
-        
+        if (detailEntry) {
+            [[XLURLHandler sharedInstance] handlerURL:[marketInfo.linkURL urlString] title:marketInfo.title];
+        }
     }
 }
 

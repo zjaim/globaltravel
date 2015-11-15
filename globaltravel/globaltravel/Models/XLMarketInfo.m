@@ -9,7 +9,6 @@
 #import "XLMarketInfo.h"
 
 @interface XLMarketInfo () {
-    NSMutableDictionary *_attributes;
     NSMutableArray *_brothersMutable;
 }
 
@@ -17,8 +16,15 @@
 
 @implementation XLMarketInfo
 
-- (instancetype)initWithElement:(TFHppleElement *)element {
+- (instancetype)init {
     if (self = [super init]) {
+        [self setIgnores:@[@"contentShown", @"brothers"]];
+    }
+    return self;
+}
+
+- (instancetype)initWithElement:(TFHppleElement *)element {
+    if (self = [self init]) {
         _brothersMutable = [NSMutableArray array];
         id imgArea = element[@"@class::imgarea@"];
         if ([imgArea isKindOfClass:[NSArray class]]) {
@@ -42,11 +48,6 @@
 }
 
 - (void)configMarket:(TFHppleElement *)element {
-    if (!_attributes) {
-        _attributes = [NSMutableDictionary dictionary];
-    } else {
-        [_attributes removeAllObjects];
-    }
     _contentShown = NO;
     
     id img = element[@"@a@"][0][@"@img@"][@"src"];
@@ -80,60 +81,40 @@
     self.linkURL = link;
 }
 
+- (void)setImagePath:(NSString *)imagePath {
+    if ([imagePath isKindOfClass:[NSString class]]) {
+        _imagePath = [imagePath copy];
+    } else {
+        _imagePath = nil;
+    }
+}
+
 - (void)setTitle:(NSString *)title {
     if ([title isKindOfClass:[NSString class]]) {
         _title = [title copy];
-        if (_title && _title.length > 0) {
-            [_attributes setObject:_title forKey:@"title"];
-            return;
-        }
+    } else {
+        _title = nil;
     }
-    _title = nil;
-    [_attributes removeObjectForKey:@"title"];
 }
 
 - (void)setContent:(NSString *)content {
     if ([content isKindOfClass:[NSString class]]) {
         _content = [content copy];
-        if (_content && _content.length > 0) {
-            [_attributes setObject:_content forKey:@"content"];
-            return;
-        }
+    } else {
+        _content = nil;
     }
-    _content = nil;
-    [_attributes removeObjectForKey:@"content"];
-}
-
-- (void)setImagePath:(NSString *)imagePath {
-    if ([imagePath isKindOfClass:[NSString class]]) {
-        _imagePath = [imagePath copy];
-        if (_imagePath && _imagePath.length > 0) {
-            [_attributes setObject:_imagePath forKey:@"imagePath"];
-            return;
-        }
-    }
-    _imagePath = nil;
-    [_attributes removeObjectForKey:@"imagePath"];
 }
 
 - (void)setLinkURL:(NSString *)linkURL {
     if ([linkURL isKindOfClass:[NSString class]]) {
         _linkURL = [linkURL copy];
-        if (_linkURL && _linkURL.length > 0) {
-            [_attributes setObject:_linkURL forKey:@"linkURL"];
-            return;
-        }
+    } else {
+        _linkURL = nil;
     }
-    _linkURL = nil;
-    [_attributes removeObjectForKey:@"linkURL"];
 }
 
 - (NSArray *)brothers {
     return [_brothersMutable copy];
-}
-
-- (NSString *)description {
-    return [NSString stringWithFormat:@"%@ - Attributes:%@", NSStringFromClass([XLMarketInfo class]), _attributes];
 }
 
 @end

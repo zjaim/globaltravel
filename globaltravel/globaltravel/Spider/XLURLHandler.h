@@ -16,7 +16,7 @@
 
 @interface XLURLHandler : NSObject
 
-+ (XLURLHandler *)shareHandler;
+DEFINE_SINGLETON_FOR_HEADER(XLURLHandler)
 
 - (void)handlerURL:(NSString *)urlString title:(NSString *)title;
 

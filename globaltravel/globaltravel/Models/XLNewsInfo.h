@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface XLNewsInfo : NSObject
+@interface XLNewsInfo : XLModelInfo
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *source;

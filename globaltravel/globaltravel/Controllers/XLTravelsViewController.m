@@ -54,7 +54,7 @@ NSString *const kXLTravelCell = @"XLTravelCell";
 
 - (void)loadTravels {
     [self showLoader];
-    [[XLSessions shareSessions] getTravelDataSuccess:^(NSArray *netTravels) {
+    [[XLSessions sharedInstance] getTravelDataSuccess:^(NSArray *netTravels) {
         [self hideLoader];
         _travels = [netTravels copy];
         [_tableView reloadData];
@@ -85,7 +85,7 @@ NSString *const kXLTravelCell = @"XLTravelCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     __weak XLTravelInfo *travelInfo = _travels[indexPath.row];
-    [[XLURLHandler shareHandler] handlerURL:[travelInfo.linkURL urlString] title:travelInfo.title];
+    [[XLURLHandler sharedInstance] handlerURL:[travelInfo.linkURL urlString] title:travelInfo.title];
 }
 
 @end

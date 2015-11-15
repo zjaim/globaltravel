@@ -23,26 +23,25 @@ function getElementsClass(classnames){
 }
 
 function hideElemets() {
-    document.getElementsByTagName('body')[0].style.background='white';
-
-    var kefu = document.getElementById('box-kefu');
-    kefu.style.display = "none";
-    
-    var code = document.getElementById('code');
-    code.style.display = "none";
-
-    var goTop = document.getElementById('gotop');
-    goTop.parentNode.removeChild(goTop);
-
     var topBg = getElementsClass('topbg')[0];
     topBg.style.display = "none";
 
     var nav = getElementsClass('nav')[0];
     nav.style.display = "none";
 
-    var center = getElementsClass('nav')[0];
-    center.style.background = "white";
-
     var bottom = getElementsClass('bottom')[0];
     bottom.style.display = "none";
+
+    document.getElementsByTagName('body')[0].style.background='white';
+
+    var kefu = document.getElementById('box-kefu');
+    if (kefu != undefined) {
+        kefu.style.display = "none";
+    }
+    
+    var code = document.getElementById('code');
+    code.style.display = "none";
+
+    var goTop = document.getElementById('gotop');
+    goTop.parentNode.removeChild(goTop);
 }

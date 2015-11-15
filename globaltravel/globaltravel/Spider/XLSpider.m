@@ -71,17 +71,7 @@
 
 @implementation XLSpider
 
-+ (XLSpider *)shareSpider {
-    static XLSpider* sharedSpider = nil;
-    if (!sharedSpider) {
-        static dispatch_once_t once = 0;
-        dispatch_once(&once, ^{
-            sharedSpider = [[XLSpider alloc] init];
-        });
-    }
-    return sharedSpider;
-}
-
+DEFINE_SINGLETON_FOR_CLASS(XLSpider)
 
 - (NSString *)spideStringWithURL:(NSString *)urlString encoding:(NSStringEncoding)encode {
     NSError *error = nil;
