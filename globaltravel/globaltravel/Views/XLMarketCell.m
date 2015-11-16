@@ -9,6 +9,12 @@
 #import "XLMarketCell.h"
 #import "XLMarketInfo.h"
 
+@interface XLMarketSectionHeaderView() {
+    UILabel *_titleLabel;
+}
+
+@end
+
 @interface XLMarketCell () {
     UIImageView *_imageView;
     
@@ -17,6 +23,30 @@
     
     UILabel *_descLabel;
     UIView *_descBgView;
+}
+
+@end
+
+@implementation XLMarketSectionHeaderView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, self.width - 20, self.height)];
+        _titleLabel.backgroundColor = [UIColor clearColor];
+        _titleLabel.textColor = [UIColor darkTextColor];
+        _titleLabel.font = SCREEN_WIDTH > 320 ? FONT(14) : FONT(13);
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.numberOfLines = 0;
+        [self addSubview:_titleLabel];
+    }
+    return self;
+}
+
+- (void)setMarketInfo:(XLMarketInfo *)marketInfo {
+    _marketInfo = marketInfo;
+    if (_marketInfo) {
+        _titleLabel.text = _marketInfo.title;
+    }
 }
 
 @end
@@ -37,24 +67,25 @@
         _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
         [contentView addSubview:_imageView];
         
-        _titleBgView = [[UIView alloc] initWithFrame:CGRectMake(0, self.height - 20, self.height, 20)];
+        _titleBgView = [[UIView alloc] initWithFrame:CGRectMake(0, self.height - 30, self.height, 30)];
         _titleBgView.backgroundColor = [UIColor blackColor];
         _titleBgView.alpha = 0;
         [contentView addSubview:_titleBgView];
         
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, self.height - 20, self.width - 20, 20)];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, self.height - 30, self.width - 10, 30)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.textColor = [UIColor whiteColor];
-        _titleLabel.font = FONT(12);
+        _titleLabel.font = SCREEN_WIDTH > 320 ? FONT(12) : FONT(11);
         _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.numberOfLines = 0;
         [contentView addSubview:_titleLabel];
         
-        _descBgView = [[UIView alloc] initWithFrame:CGRectMake(0.5, 0.5, self.width - 1, self.height - 20.5)];
+        _descBgView = [[UIView alloc] initWithFrame:CGRectMake(0.5, 0.5, self.width - 1, self.height - 30.5)];
         _descBgView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.35];
         _descBgView.hidden = YES;
         
-        _descLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, _descBgView.width - 20, _descBgView.height - 20)];
-        _descLabel.font = FONT(11);
+        _descLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, _descBgView.width - 10, _descBgView.height - 10)];
+        _descLabel.font = SCREEN_WIDTH > 320 ? FONT(11) : FONT(10);
         _descLabel.numberOfLines = 0;
         _descLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         _descLabel.textColor = [UIColor whiteColor];

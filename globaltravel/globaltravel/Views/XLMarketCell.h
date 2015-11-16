@@ -10,6 +10,12 @@
 
 @class XLMarketInfo;
 
+@interface XLMarketSectionHeaderView : UICollectionReusableView
+
+@property (nonatomic, strong) XLMarketInfo *marketInfo;
+
+@end
+
 @interface XLMarketCell : UICollectionViewCell
 
 @property (nonatomic, strong) XLMarketInfo *marketInfo;

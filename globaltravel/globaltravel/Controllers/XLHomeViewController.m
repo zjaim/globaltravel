@@ -12,13 +12,13 @@
 #import "XLMarketCell.h"
 #import "XLMarketInfo.h"
 
-#define kColumnNumber (SCREEN_WIDTH > 320 ? 3 : 2)
+#define kColumnNumber 3
 #define kMargenHorizontal 10
 #define kGapHorizontal 10
 
 NSString *const kXLHomeHeaderView = @"XLHomeHeaderView";
 NSString *const kXLHomeHeaderViewCell = @"HomeHeaderViewCell";
-NSString *const kMarketSectionHeaderView = @"MarketSectionHeaderView";
+NSString *const kXLMarketSectionHeaderView = @"XLMarketSectionHeaderView";
 NSString *const kXLMarketCell = @"XLMarketCell";
 
 @interface XLHomeViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource> {
@@ -58,13 +58,14 @@ NSString *const kXLMarketCell = @"XLMarketCell";
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, navHeight, SCREEN_WIDTH, SCREEN_HEIGHT - navHeight - TABBAR_HEIGHT) collectionViewLayout:cvLayout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 10, 0);
+    _collectionView.alwaysBounceVertical = YES;
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     [self.view addSubview:_collectionView];
     
     [_collectionView registerClass:[XLHomeHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kXLHomeHeaderView];
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kXLHomeHeaderViewCell];
-    [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMarketSectionHeaderView];
+    [_collectionView registerClass:[XLMarketSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kXLMarketSectionHeaderView];
     [_collectionView registerClass:[XLMarketCell class] forCellWithReuseIdentifier:kXLMarketCell];
 }
 
@@ -95,9 +96,11 @@ NSString *const kXLMarketCell = @"XLMarketCell";
             headerView.activities = _activities;
             return headerView;
         }
-        UICollectionReusableView *sectionHeaderView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMarketSectionHeaderView forIndexPath:indexPath];
-        sectionHeaderView.backgroundColor = [UIColor whiteColor];
-        return sectionHeaderView;
+        if (indexPath.section > 0) {
+            XLMarketSectionHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kXLMarketSectionHeaderView forIndexPath:indexPath];
+            headerView.marketInfo = (_markets && _markets.count > indexPath.section - 1) ? (_markets[indexPath.section - 1] && [_markets[indexPath.section - 1] count] > 0 ? _markets[indexPath.section - 1][0] : nil) : nil;
+            return headerView;
+        }
     }
     return nil;
 }
@@ -107,7 +110,7 @@ NSString *const kXLMarketCell = @"XLMarketCell";
         return 0;
     }
     if (_markets && _markets.count > section - 1) {
-        return ([_markets[section - 1] count] > 0) ? [_markets[section - 1] count] : 0;
+        return ([_markets[section - 1] count] > 1) ? [_markets[section - 1] count] - 1 : 0;
     }
     return 0;
 }
@@ -116,7 +119,7 @@ NSString *const kXLMarketCell = @"XLMarketCell";
     if (section == 0) {
         return CGSizeMake(SCREEN_WIDTH, ScreenScale(90));
     }
-    return CGSizeMake(SCREEN_WIDTH, 10);
+    return CGSizeMake(SCREEN_WIDTH, SCREEN_WIDTH > 320 ? 40 : 30);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
@@ -130,7 +133,7 @@ NSString *const kXLMarketCell = @"XLMarketCell";
         return fistCell;
     }
     XLMarketCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kXLMarketCell forIndexPath:indexPath];
-    cell.marketInfo = _markets[indexPath.section - 1][indexPath.item];
+    cell.marketInfo = _markets[indexPath.section - 1][indexPath.item + 1];
     return cell;
 }
 
@@ -156,7 +159,7 @@ NSString *const kXLMarketCell = @"XLMarketCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section > 0) {
-        __weak XLMarketInfo *marketInfo = _markets[indexPath.section - 1][indexPath.item];
+        __weak XLMarketInfo *marketInfo = _markets[indexPath.section - 1][indexPath.item + 1];
         BOOL detailEntry = NO;
         if (marketInfo.content && marketInfo.content.length > 0) {
             if (marketInfo.contentShown) {

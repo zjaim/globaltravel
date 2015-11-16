@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define kTravelCellImageHeight (SCREEN_WIDTH > 320 ? 120 : 100)
+
 @class XLTravelInfo;
 
 @interface XLTravelCell : UITableViewCell
