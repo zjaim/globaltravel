@@ -98,7 +98,7 @@ NSString *const kXLMarketCell = @"XLMarketCell";
 
 - (void)loadNetData {
     static BOOL showRefreshControl = NO;
-    if (showRefreshControl) {
+    if (!showRefreshControl) {
         [self showLoader];
         showRefreshControl = YES;
     }

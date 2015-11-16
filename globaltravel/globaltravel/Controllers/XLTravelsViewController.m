@@ -81,7 +81,7 @@ NSString *const kXLTravelCell = @"XLTravelCell";
 
 - (void)loadTravels {
     static BOOL showRefreshControl = NO;
-    if (showRefreshControl) {
+    if (!showRefreshControl) {
         [self showLoader];
         showRefreshControl = YES;
     }
