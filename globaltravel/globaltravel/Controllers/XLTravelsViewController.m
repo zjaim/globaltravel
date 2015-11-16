@@ -13,6 +13,7 @@
 NSString *const kXLTravelCell = @"XLTravelCell";
 @interface XLTravelsViewController () <UITableViewDelegate, UITableViewDataSource> {
     UITableView *_tableView;
+    UIRefreshControl *_refreshControl;
     
     NSArray *_travels;
 }
@@ -20,6 +21,16 @@ NSString *const kXLTravelCell = @"XLTravelCell";
 @end
 
 @implementation XLTravelsViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self hideRefresh];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self hideRefresh];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,6 +49,18 @@ NSString *const kXLTravelCell = @"XLTravelCell";
     // Dispose of any resources that can be recreated.
 }
 
+- (void)showRefresh {
+    if (!_refreshControl.refreshing) {
+        [_refreshControl beginRefreshing];
+    }
+}
+
+- (void)hideRefresh {
+    if (_refreshControl.refreshing) {
+        [_refreshControl endRefreshing];
+    }
+}
+
 - (void)addTravels {
     CGFloat navHeight = STATUSBAR_HEIGHT + NAVBAR_HEIGHT;
     
@@ -49,17 +72,28 @@ NSString *const kXLTravelCell = @"XLTravelCell";
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     
+    _refreshControl = [UIRefreshControl new];
+    [_refreshControl addTarget:self action:@selector(loadTravels) forControlEvents:UIControlEventValueChanged];
+    [_tableView addSubview:_refreshControl];
+    
     [_tableView registerClass:[XLTravelCell class] forCellReuseIdentifier:kXLTravelCell];
 }
 
 - (void)loadTravels {
-    [self showLoader];
+    static BOOL showRefreshControl = NO;
+    if (showRefreshControl) {
+        [self showLoader];
+        showRefreshControl = YES;
+    }
+    
     [[XLSessions sharedInstance] getTravelDataSuccess:^(NSArray *netTravels) {
         [self hideLoader];
+        [self hideRefresh];
         _travels = [netTravels copy];
         [_tableView reloadData];
     } failed:^{
         [self hideLoader];
+        [self hideRefresh];
     }];
 }
 

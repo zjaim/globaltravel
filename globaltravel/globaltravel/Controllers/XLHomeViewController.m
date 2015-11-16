@@ -23,6 +23,7 @@ NSString *const kXLMarketCell = @"XLMarketCell";
 
 @interface XLHomeViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource> {
     UICollectionView *_collectionView;
+    UIRefreshControl *_refreshControl;
     
     NSArray *_activities;
     NSArray *_markets;
@@ -31,6 +32,16 @@ NSString *const kXLMarketCell = @"XLMarketCell";
 @end
 
 @implementation XLHomeViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self hideRefresh];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self hideRefresh];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -49,6 +60,18 @@ NSString *const kXLMarketCell = @"XLMarketCell";
     // Dispose of any resources that can be recreated.
 }
 
+- (void)showRefresh {
+    if (!_refreshControl.refreshing) {
+        [_refreshControl beginRefreshing];
+    }
+}
+
+- (void)hideRefresh {
+    if (_refreshControl.refreshing) {
+        [_refreshControl endRefreshing];
+    }
+}
+
 - (void)addMarkets {
     CGFloat navHeight = STATUSBAR_HEIGHT + NAVBAR_HEIGHT;
     
@@ -63,6 +86,10 @@ NSString *const kXLMarketCell = @"XLMarketCell";
     _collectionView.dataSource = self;
     [self.view addSubview:_collectionView];
     
+    _refreshControl = [UIRefreshControl new];
+    [_refreshControl addTarget:self action:@selector(loadNetData) forControlEvents:UIControlEventValueChanged];
+    [_collectionView addSubview:_refreshControl];
+    
     [_collectionView registerClass:[XLHomeHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kXLHomeHeaderView];
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kXLHomeHeaderViewCell];
     [_collectionView registerClass:[XLMarketSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kXLMarketSectionHeaderView];
@@ -70,9 +97,15 @@ NSString *const kXLMarketCell = @"XLMarketCell";
 }
 
 - (void)loadNetData {
-    [self showLoader];
+    static BOOL showRefreshControl = NO;
+    if (showRefreshControl) {
+        [self showLoader];
+        showRefreshControl = YES;
+    }
+    
     [[XLSessions sharedInstance] getHomeDataSuccess:^(NSArray *netActivities, NSArray *netMarkets) {
         [self hideLoader];
+        [self hideRefresh];
         _activities = [netActivities copy];
         _markets = [netMarkets copy];
         for (id obj in _markets) {
@@ -81,6 +114,7 @@ NSString *const kXLMarketCell = @"XLMarketCell";
         [_collectionView reloadData];
     } failed:^{
         [self hideLoader];
+        [self hideRefresh];
     }];
 }
 
