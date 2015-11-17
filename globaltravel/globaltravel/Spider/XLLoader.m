@@ -14,6 +14,8 @@ static const void *_scrollBaseView = &_scrollBaseView;
 static const void *_refreshControl = &_refreshControl;
 
 @implementation UIViewController (Loader)
+@dynamic scrollBaseView;
+@dynamic refreshControl;
 
 - (UIView *)scrollBaseView {
     return objc_getAssociatedObject(self, _scrollBaseView);
