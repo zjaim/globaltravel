@@ -10,6 +10,13 @@
 
 @interface UIViewController (Loader)
 
+@property (nonatomic, weak) UIView *scrollBaseView;
+@property (nonatomic, weak) UIRefreshControl *refreshControl;
+
+- (void)addRefreshControl:(SEL)selector;
+- (void)showRefreshControl;
+- (void)hideRefreshControl;
+
 - (void)showLoader;
 - (void)hideLoader;
 

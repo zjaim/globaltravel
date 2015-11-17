@@ -13,7 +13,6 @@
 NSString *const kXLTravelCell = @"XLTravelCell";
 @interface XLTravelsViewController () <UITableViewDelegate, UITableViewDataSource> {
     UITableView *_tableView;
-    UIRefreshControl *_refreshControl;
     
     NSArray *_travels;
 }
@@ -24,12 +23,12 @@ NSString *const kXLTravelCell = @"XLTravelCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self hideRefresh];
+    [self hideRefreshControl];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [self hideRefresh];
+    [self hideRefreshControl];
 }
 
 - (void)viewDidLoad {
@@ -49,32 +48,21 @@ NSString *const kXLTravelCell = @"XLTravelCell";
     // Dispose of any resources that can be recreated.
 }
 
-- (void)showRefresh {
-    if (!_refreshControl.refreshing) {
-        [_refreshControl beginRefreshing];
-    }
-}
-
-- (void)hideRefresh {
-    if (_refreshControl.refreshing) {
-        [_refreshControl endRefreshing];
-    }
-}
-
 - (void)addTravels {
     CGFloat navHeight = STATUSBAR_HEIGHT + NAVBAR_HEIGHT;
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, navHeight, SCREEN_WIDTH, SCREEN_HEIGHT - navHeight - TABBAR_HEIGHT)];
+    [self addRefreshControl:@selector(loadTravels)];
+    self.scrollBaseView.frame = CGRectMake(0, navHeight, SCREEN_WIDTH, SCREEN_HEIGHT - navHeight - TABBAR_HEIGHT);
+    
+    
+    _tableView = [[UITableView alloc] initWithFrame:self.scrollBaseView.bounds];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.tableHeaderView = [UIView new];
     _tableView.tableFooterView = [UIView new];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:_tableView];
-    
-    _refreshControl = [UIRefreshControl new];
-    [_refreshControl addTarget:self action:@selector(loadTravels) forControlEvents:UIControlEventValueChanged];
-    [_tableView addSubview:_refreshControl];
+    [self.scrollBaseView addSubview:_tableView];
+    [self.view addSubview:self.scrollBaseView];
     
     [_tableView registerClass:[XLTravelCell class] forCellReuseIdentifier:kXLTravelCell];
 }
@@ -88,12 +76,12 @@ NSString *const kXLTravelCell = @"XLTravelCell";
     
     [[XLSessions sharedInstance] getTravelDataSuccess:^(NSArray *netTravels) {
         [self hideLoader];
-        [self hideRefresh];
+        [self hideRefreshControl];
         _travels = [netTravels copy];
         [_tableView reloadData];
     } failed:^{
         [self hideLoader];
-        [self hideRefresh];
+        [self hideRefreshControl];
     }];
 }
 

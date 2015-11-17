@@ -23,7 +23,6 @@ NSString *const kXLMarketCell = @"XLMarketCell";
 
 @interface XLHomeViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource> {
     UICollectionView *_collectionView;
-    UIRefreshControl *_refreshControl;
     
     NSArray *_activities;
     NSArray *_markets;
@@ -35,12 +34,12 @@ NSString *const kXLMarketCell = @"XLMarketCell";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self hideRefresh];
+    [self hideRefreshControl];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [self hideRefresh];
+    [self hideRefreshControl];
 }
 
 - (void)viewDidLoad {
@@ -60,35 +59,23 @@ NSString *const kXLMarketCell = @"XLMarketCell";
     // Dispose of any resources that can be recreated.
 }
 
-- (void)showRefresh {
-    if (!_refreshControl.refreshing) {
-        [_refreshControl beginRefreshing];
-    }
-}
-
-- (void)hideRefresh {
-    if (_refreshControl.refreshing) {
-        [_refreshControl endRefreshing];
-    }
-}
-
 - (void)addMarkets {
     CGFloat navHeight = STATUSBAR_HEIGHT + NAVBAR_HEIGHT;
+    
+    [self addRefreshControl:@selector(loadNetData)];
+    self.scrollBaseView.frame = CGRectMake(0, navHeight, SCREEN_WIDTH, SCREEN_HEIGHT - navHeight - TABBAR_HEIGHT);
     
     UICollectionViewFlowLayout *cvLayout = [[UICollectionViewFlowLayout alloc] init];
     cvLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, navHeight, SCREEN_WIDTH, SCREEN_HEIGHT - navHeight - TABBAR_HEIGHT) collectionViewLayout:cvLayout];
+    _collectionView = [[UICollectionView alloc] initWithFrame:self.scrollBaseView.bounds collectionViewLayout:cvLayout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     _collectionView.contentInset = UIEdgeInsetsMake(0, 0, 10, 0);
     _collectionView.alwaysBounceVertical = YES;
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
-    [self.view addSubview:_collectionView];
-    
-    _refreshControl = [UIRefreshControl new];
-    [_refreshControl addTarget:self action:@selector(loadNetData) forControlEvents:UIControlEventValueChanged];
-    [_collectionView addSubview:_refreshControl];
+    [self.scrollBaseView addSubview:_collectionView];
+    [self.view addSubview:self.scrollBaseView];
     
     [_collectionView registerClass:[XLHomeHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kXLHomeHeaderView];
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kXLHomeHeaderViewCell];
@@ -105,7 +92,7 @@ NSString *const kXLMarketCell = @"XLMarketCell";
     
     [[XLSessions sharedInstance] getHomeDataSuccess:^(NSArray *netActivities, NSArray *netMarkets) {
         [self hideLoader];
-        [self hideRefresh];
+        [self hideRefreshControl];
         _activities = [netActivities copy];
         _markets = [netMarkets copy];
         for (id obj in _markets) {
@@ -114,7 +101,7 @@ NSString *const kXLMarketCell = @"XLMarketCell";
         [_collectionView reloadData];
     } failed:^{
         [self hideLoader];
-        [self hideRefresh];
+        [self hideRefreshControl];
     }];
 }
 
